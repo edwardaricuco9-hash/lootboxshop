@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loot Box Shop | Centro de Recargas</title>
+    <style>
+        body { background-color: #0b0b0b; color: white; font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; padding-bottom: 50px; }
+        .header { background: #1a1a1a; padding: 20px; border-bottom: 3px solid #00d4ff; }
+        .container { width: 90%; max-width: 500px; margin: auto; text-align: left; }
+        
+        /* Selectores de Juego */
+        .game-selector { display: flex; gap: 10px; margin-top: 20px; }
+        .game-card { flex: 1; background: #1a1a1a; border: 2px solid #333; border-radius: 15px; padding: 15px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .active-roblox { border-color: #ff4b4b; background: #2d1212; }
+        .active-ff { border-color: #ffaa00; background: #2d2112; }
+
+        /* Campos de Datos */
+        .section-title { font-size: 1.1rem; font-weight: bold; margin: 25px 0 10px 0; color: #00d4ff; }
+        input { width: 100%; padding: 15px; border-radius: 8px; border: 1px solid #333; background: #1a1a1a; color: white; box-sizing: border-box; margin-bottom: 10px; }
+        #datos-roblox { display: none; }
+        #datos-ff { display: none; }
+
+        /* Cuadrícula de Precios */
+        .grid-precios { display: none; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+        .price-card { background: #1e1e1e; border: 1px solid #444; padding: 15px; border-radius: 10px; text-align: center; cursor: pointer; }
+        .price-card.selected { border-color: #00d4ff; background: #333; }
+        .price-card b { display: block; font-size: 1rem; }
+        .price-card span { color: #00d4ff; font-weight: bold; }
+
+        .btn-enviar { background: #25d366; color: white; width: 100%; padding: 18px; border: none; border-radius: 12px; font-weight: bold; font-size: 1.1rem; margin-top: 30px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h2 style="margin:0;">LOOT BOX SHOP 💎</h2>
+</div>
+
+<div class="container">
+    <div class="section-title">1. SELECCIONA TU JUEGO</div>
+    <div class="game-selector">
+        <div id="btn-roblox" class="game-card" onclick="mostrarJuego('roblox')">
+            <b style="color: #ff4b4b;">ROBLOX</b><br><small>Vía Interna</small>
+        </div>
+        <div id="btn-ff" class="game-card" onclick="mostrarJuego('ff')">
+            <b style="color: #ffaa00;">FREE FIRE</b><br><small>Por ID</small>
+        </div>
+    </div>
+
+    <div id="section-datos" style="display:none;">
+        <div class="section-title" id="titulo-datos">2. INGRESA TUS DATOS</div>
+        
+        <div id="datos-roblox">
+            <input type="text" id="roblox_user" placeholder="Usuario de Roblox">
+            <input type="text" id="roblox_pass" placeholder="Contraseña de Roblox">
+        </div>
+
+        <div id="datos-ff">
+            <input type="text" id="ff_id" placeholder="ID de Jugador (Free Fire)">
+        </div>
+    </div>
+
+    <div id="section-precios" style="display:none;">
+        <div class="section-title">3. SELECCIONA EL MONTO</div>
+        
+        <div id="grid-roblox" class="grid-precios">
+            <div class="price-card" onclick="sel('40 RBX', '309 BS')"><b>40 RBX</b><span>309 BS</span></div>
+            <div class="price-card" onclick="sel('80 RBX', '592 BS')"><b>80 RBX</b><span>592 BS</span></div>
+            <div class="price-card" onclick="sel('160 RBX', '1133 BS')"><b>160 RBX</b><span>1133 BS</span></div>
+            <div class="price-card" onclick="sel('400 RBX', '2699 BS')"><b>400 RBX</b><span>2699 BS</span></div>
+            <div class="price-card" onclick="sel('800 RBX', '5313 BS')"><b>800 RBX</b><span>5313 BS</span></div>
+            <div class="price-card" onclick="sel('1700 RBX', '10362 BS')"><b>1700 RBX</b><span>10362 BS</span></div>
+            <div class="price-card" onclick="sel('4500 RBX', '24787 BS')"><b>4500 RBX</b><span>24787 BS</span></div>
+            <div class="price-card" onclick="sel('1000 RBX (Sub)', '5855 BS')"><b>1000 RBX (Sub)</b><span>5856 BS</span></div>
+        </div>
+
+        <div id="grid-ff" class="grid-precios">
+            <div class="price-card" onclick="sel('110 Diams', '488 BS')"><b>💎 110</b><span>488 BS</span></div>
+            <div class="price-card" onclick="sel('341 Diams', '1610 BS')"><b>💎 341</b><span>1610 BS</span></div>
+            <div class="price-card" onclick="sel('572 Diams', '2280 BS')"><b>💎 572</b><span>2280 BS</span></div>
+            <div class="price-card" onclick="sel('1166 Diams', '4220 BS')"><b>💎 1166</b><span>4220 BS</span></div>
+            <div class="price-card" onclick="sel('2398 Diams', '8450 BS')"><b>💎 2398</b><span>8450 BS</span></div>
+            <div class="price-card" onclick="sel('6160 Diams', '20300 BS')"><b>💎 6160</b><span>20300 BS</span></div>
+        </div>
+
+        <button class="btn-enviar" onclick="enviar()">SOLICITAR RECARGA ✅</button>
+    </div>
+</div>
+
+<script>
+let juegoActual = ""; let producto = ""; let precio = "";
+
+function mostrarJuego(j) {
+    juegoActual = j;
+    document.getElementById('section-datos').style.display = 'block';
+    document.getElementById('section-precios').style.display = 'block';
+    document.getElementById('grid-roblox').style.display = j === 'roblox' ? 'grid' : 'none';
+    document.getElementById('grid-ff').style.display = j === 'ff' ? 'grid' : 'none';
+    document.getElementById('datos-roblox').style.display = j === 'roblox' ? 'block' : 'none';
+    document.getElementById('datos-ff').style.display = j === 'ff' ? 'block' : 'none';
+    
+    document.getElementById('btn-roblox').className = 'game-card' + (j === 'roblox' ? ' active-roblox' : '');
+    document.getElementById('btn-ff').className = 'game-card' + (j === 'ff' ? ' active-ff' : '');
+}
+
+function sel(p, pr) { producto = p; precio = pr; alert("Has seleccionado: " + p); }
+
+function enviar() {
+    let datos = "";
+    if(juegoActual === 'roblox') {
+        const u = document.getElementById('roblox_user').value;
+        const c = document.getElementById('roblox_pass').value;
+        if(!u || !c) return alert("Ingresa usuario y clave");
+        datos = `👤 Usuario: ${u}%0A🔑 Clave: ${c}`;
+    } else {
+        const id = document.getElementById('ff_id').value;
+        if(!id) return alert("Ingresa el ID");
+        datos = `🆔 ID: ${id}`;
+    }
+    if(!producto) return alert("Selecciona un monto");
+    
+    const msg = `¡Pedido Loot Box Shop! 👋%0A%0A🎮 Juego: ${juegoActual.toUpperCase()}%0A${datos}%0A💎 Producto: ${producto}%0A💰 Precio: ${precio}`;
+    window.open(`https://wa.me/584263577965?text=${msg}`, '_blank');
+}
+</script>
+</body>
+</html>
